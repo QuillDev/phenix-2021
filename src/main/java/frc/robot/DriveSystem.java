@@ -51,16 +51,15 @@ public class DriveSystem {
 
     private void init() {
         for(var motor : this.motors){
-            motor.restoreFactoryDefaults();
+            var res = motor.restoreFactoryDefaults();
+            System.out.println(res);
             var encoder = motor.getEncoder();
             encoder.setVelocityConversionFactor( 
                 (1 / encoder.getCountsPerRevolution()) * 4 * Math.PI * 2.54 / 100
                 );
                 
             var pid = motor.getPIDController();
-            pid.setP(1);
-            pid.setI(.1);
-            pid.setD(.1);
+
         }
     }
     public void drive(double x, double r) {
@@ -68,9 +67,10 @@ public class DriveSystem {
         var left = speeds.leftMetersPerSecond;
         var right = speeds.rightMetersPerSecond;
 
-        flPID.setReference(left, ControlType.kSmartVelocity);
-        blPID.setReference(left, ControlType.kSmartVelocity);
-        frPID.setReference(right, ControlType.kSmartVelocity);
-        brPID.setReference(right, ControlType.kSmartVelocity);
+        System.out.printf("L:%s, R:%s\n", left, right);
+        fl.set(left);
+        fr.set(right);
+        bl.set(left);
+        br.set(right);
     }
 }

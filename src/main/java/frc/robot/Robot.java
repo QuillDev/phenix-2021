@@ -43,12 +43,13 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     var y = -stick.getRawAxis(1);
-    var r = stick.getRawAxis(4);
+    var r = -stick.getRawAxis(4);
 
+    System.out.println("A");
     if(Math.abs(y) <= .2) { y = 0; }
     if(Math.abs(r) <= .2) { r = 0; }
 
-    drive.drive(y, r);
+    drive.drive(r, y);
   }
 
   @Override
